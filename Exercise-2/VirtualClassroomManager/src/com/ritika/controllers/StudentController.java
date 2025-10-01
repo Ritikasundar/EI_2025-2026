@@ -1,24 +1,26 @@
 package com.ritika.controllers;
 
-import com.ritika.models.Classroom;
 import com.ritika.services.StudentService;
+import com.ritika.services.ClassroomService;
 import com.ritika.utils.LoggerUtil;
 
 public class StudentController {
 
     private StudentService studentService;
-    private ClassroomController classroomController;
 
     public StudentController(ClassroomController classroomController) {
-        this.studentService = new StudentService();
-        this.classroomController = classroomController;
+        this.studentService = new StudentService(classroomController.getClassroomService());
     }
 
     public void addStudent(String studentId, String className) {
         LoggerUtil logger = LoggerUtil.getInstance();
-        Classroom classroom = classroomController.getClassroom(className);
-        studentService.enrollStudent(studentId, classroom);
+        studentService.addStudent(studentId, className);
         System.out.println("Student [" + studentId + "] has been enrolled in [" + className + "].");
-        logger.log("Student added: " + studentId + " to classroom " + className);
+        logger.log("Student added: " + studentId + " to " + className);
+    }
+
+    
+    public void listStudents(String className) {
+        studentService.listStudents(className);
     }
 }

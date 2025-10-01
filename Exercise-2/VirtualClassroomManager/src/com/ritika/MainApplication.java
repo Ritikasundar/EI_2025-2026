@@ -26,9 +26,10 @@ public class MainApplication {
             System.out.println("4. Submit Assignment");
             System.out.println("5. List Classrooms");
             System.out.println("6. Exit");
-            System.out.println("7. Remove Classroom"); // ✅ new option
+            System.out.println("7. Remove Classroom");
+            System.out.println("8. View Students in a Classroom"); // ✅ new option
 
-            System.out.print("Enter your choice (1-7): ");
+            System.out.print("Enter your choice (1-8): ");
             String input = scanner.nextLine().trim();
 
             try {
@@ -74,14 +75,20 @@ public class MainApplication {
                         running = false;
                         break;
 
-                    case "7": 
+                    case "7":
                         System.out.print("Enter classroom name to remove: ");
                         String classNameToRemove = scanner.nextLine().trim();
                         classroomController.removeClassroom(classNameToRemove);
                         break;
 
+                    case "8": 
+                        System.out.print("Enter classroom name to view students: ");
+                        String classNameForView = scanner.nextLine().trim();
+                        studentController.listStudents(classNameForView);
+                        break;
+
                     default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 7.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 8.");
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());

@@ -33,4 +33,9 @@ public class ClassroomController {
         System.out.println("Classroom [" + className + "] has been removed.");
         logger.log("Classroom removed: " + className);
     }
+
+    // ✅ Getter for service (used in StudentController)
+    public ClassroomService getClassroomService() {
+        return this.classroomService;
+    }
 }

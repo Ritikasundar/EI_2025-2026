@@ -1,22 +1,47 @@
 package com.ritika.services;
 
-import com.ritika.models.Student;
 import com.ritika.models.Classroom;
+import com.ritika.models.Student;
 import com.ritika.exceptions.StudentException;
+import com.ritika.exceptions.ClassroomException;
+
+import java.util.List;
 
 public class StudentService {
-    public void enrollStudent(String studentId, Classroom classroom) {
-        if(classroom.getStudents().stream().anyMatch(s -> s.getId().equals(studentId))) {
-            throw new StudentException("Student already enrolled.");
-        }
-        classroom.addStudent(new Student(studentId));
+
+    private ClassroomService classroomService;
+
+    public StudentService(ClassroomService classroomService) {
+        this.classroomService = classroomService;
     }
 
-    public void listStudents(Classroom classroom) {
-        if(classroom.getStudents().isEmpty()) {
-            System.out.println("No students in classroom.");
+    public void addStudent(String studentId, String className) {
+        Classroom classroom = classroomService.getClassroom(className);
+
+        // Defensive programming - check duplicate student IDs
+        for (Student s : classroom.getStudents()) {
+            if (s.getId().equals(studentId)) {
+                throw new StudentException("Student with ID " + studentId + " already exists in " + className);
+            }
+        }
+
+        Student student = new Student(studentId);
+        classroom.addStudent(student);
+    }
+
+   
+    public void listStudents(String className) {
+        Classroom classroom = classroomService.getClassroom(className);
+        List<Student> students = classroom.getStudents();
+
+        if (students.isEmpty()) {
+            System.out.println("No students enrolled in classroom [" + className + "].");
             return;
         }
-        classroom.getStudents().forEach(s -> System.out.println(s.getId()));
+
+        System.out.println("Students in classroom [" + className + "]:");
+        for (Student student : students) {
+            System.out.println("- " + student.getId());
+        }
     }
 }
