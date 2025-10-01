@@ -1,7 +1,7 @@
 package com.ritika.controllers;
 
 import com.ritika.services.StudentService;
-import com.ritika.services.ClassroomService;
+import com.ritika.controllers.ClassroomController;
 import com.ritika.utils.LoggerUtil;
 
 public class StudentController {
@@ -13,14 +13,13 @@ public class StudentController {
     }
 
     public void addStudent(String studentId, String className) {
-        LoggerUtil logger = LoggerUtil.getInstance();
         studentService.addStudent(studentId, className);
+        LoggerUtil.log("Student [" + studentId + "] added to classroom [" + className + "].");
         System.out.println("Student [" + studentId + "] has been enrolled in [" + className + "].");
-        logger.log("Student added: " + studentId + " to " + className);
     }
 
-    
     public void listStudents(String className) {
         studentService.listStudents(className);
+        LoggerUtil.log("Listed students in classroom [" + className + "].");
     }
 }

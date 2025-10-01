@@ -1,0 +1,4 @@
+[2025-10-01 21:49:22] Classroom [a] added.
+[2025-10-01 21:49:49] Student [11] added to classroom [a].
+[2025-10-01 21:50:22] Assignment [1] scheduled for classroom [a].
+[2025-10-01 21:50:46] Listed all classrooms.

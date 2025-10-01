@@ -1,7 +1,7 @@
 package com.ritika.controllers;
 
-import com.ritika.services.ClassroomService;
 import com.ritika.models.Classroom;
+import com.ritika.services.ClassroomService;
 import com.ritika.utils.LoggerUtil;
 
 public class ClassroomController {
@@ -12,30 +12,24 @@ public class ClassroomController {
         this.classroomService = new ClassroomService();
     }
 
-    public void addClassroom(String className) {
-        LoggerUtil logger = LoggerUtil.getInstance();
-        classroomService.addClassroom(className);
-        System.out.println("Classroom [" + className + "] has been created.");
-        logger.log("Classroom added: " + className);
+    public ClassroomService getClassroomService() {
+        return classroomService;
     }
 
-    public Classroom getClassroom(String className) {
-        return classroomService.getClassroom(className);
+    public void addClassroom(String name) {
+        classroomService.addClassroom(name);
+        LoggerUtil.log("Classroom [" + name + "] added.");
+        System.out.println("Classroom [" + name + "] has been created.");
+    }
+
+    public void removeClassroom(String name) {
+        classroomService.removeClassroom(name);
+        LoggerUtil.log("Classroom [" + name + "] removed.");
+        System.out.println("Classroom [" + name + "] has been removed.");
     }
 
     public void listClassrooms() {
         classroomService.listClassrooms();
-    }
-
-    public void removeClassroom(String className) {
-        LoggerUtil logger = LoggerUtil.getInstance();
-        classroomService.removeClassroom(className);
-        System.out.println("Classroom [" + className + "] has been removed.");
-        logger.log("Classroom removed: " + className);
-    }
-
-    // ✅ Getter for service (used in StudentController)
-    public ClassroomService getClassroomService() {
-        return this.classroomService;
+        LoggerUtil.log("Listed all classrooms.");
     }
 }

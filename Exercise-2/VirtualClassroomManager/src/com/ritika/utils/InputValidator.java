@@ -1,9 +1,14 @@
 package com.ritika.utils;
 
 public class InputValidator {
-    public static void validateNotEmpty(String input, String field) {
-        if(input == null || input.trim().isEmpty()) {
-            throw new IllegalArgumentException(field + " cannot be empty.");
-        }
+
+    // Check if a string is null or empty
+    public static boolean isValidString(String input) {
+        return input != null && !input.trim().isEmpty();
+    }
+
+    // Check if ID contains only letters/digits
+    public static boolean isValidId(String id) {
+        return isValidString(id) && id.matches("[A-Za-z0-9_-]+");
     }
 }
