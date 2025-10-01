@@ -1,13 +1,9 @@
 package com.ritika.services;
 
+import com.ritika.models.Assignment;
 import com.ritika.models.Classroom;
 import com.ritika.models.Student;
-import com.ritika.models.Assignment;
 import com.ritika.exceptions.AssignmentException;
-import com.ritika.exceptions.ClassroomException;
-
-import java.util.List;
-import java.util.ArrayList;
 
 public class AssignmentService {
 
@@ -19,58 +15,55 @@ public class AssignmentService {
 
     public void scheduleAssignment(String className, String assignmentId, String assignmentDetails) {
         Classroom classroom = classroomService.getClassroom(className);
-        Assignment assignment = new Assignment(assignmentId, assignmentDetails);
-        classroom.addAssignment(assignment);
+        if (classroom == null) {
+            throw new AssignmentException("Classroom [" + className + "] does not exist.");
+        }
+        try {
+            classroom.addAssignment(new Assignment(assignmentId, assignmentDetails));
+        } catch (RuntimeException e) {
+            throw new AssignmentException(e.getMessage()); // rethrow as AssignmentException
+        }
     }
 
     public void submitAssignment(String studentId, String className, String assignmentId) {
         Classroom classroom = classroomService.getClassroom(className);
-        Assignment assignment = classroom.getAssignmentById(assignmentId);
+        if (classroom == null) {
+            throw new AssignmentException("Classroom [" + className + "] does not exist.");
+        }
+
+        Assignment assignment = classroom.getAssignment(assignmentId);
         if (assignment == null) {
-            throw new AssignmentException("Assignment not found with ID: " + assignmentId);
+            throw new AssignmentException("Assignment [" + assignmentId + "] not found in [" + className + "].");
         }
 
         Student student = classroom.getStudentById(studentId);
         if (student == null) {
-            throw new ClassroomException("Student not found in classroom: " + studentId);
+            throw new AssignmentException("Student [" + studentId + "] not found in [" + className + "].");
         }
 
-        assignment.markSubmitted(student);
+        boolean success = assignment.markSubmitted(studentId);
+        if (!success) {
+            throw new AssignmentException("Student [" + studentId + "] has already submitted Assignment [" + assignmentId + "] in [" + className + "].");
+        }
     }
 
     public void viewAssignmentSubmissions(String className, String assignmentId) {
         Classroom classroom = classroomService.getClassroom(className);
-        Assignment assignment = classroom.getAssignmentById(assignmentId);
+        if (classroom == null) {
+            throw new AssignmentException("Classroom [" + className + "] does not exist.");
+        }
 
+        Assignment assignment = classroom.getAssignment(assignmentId);
         if (assignment == null) {
-            throw new AssignmentException("Assignment not found with ID: " + assignmentId);
+            throw new AssignmentException("Assignment [" + assignmentId + "] not found in [" + className + "].");
         }
 
-        List<Student> submitted = assignment.getSubmittedStudents();
-        List<Student> notSubmitted = new ArrayList<>();
-
-        for (Student student : classroom.getStudents()) {
-            if (!submitted.contains(student)) {
-                notSubmitted.add(student);
-            }
-        }
-
-        System.out.println("Assignment ID: [" + assignmentId + "] in Classroom [" + className + "]");
-        System.out.println("\nStudents who submitted:");
-        if (submitted.isEmpty()) {
-            System.out.println("- None");
+        System.out.println("Submissions for Assignment [" + assignmentId + "] in Class [" + className + "]:");
+        if (assignment.getSubmittedStudents().isEmpty()) {
+            System.out.println("No submissions yet.");
         } else {
-            for (Student s : submitted) {
-                System.out.println("- " + s.getId());
-            }
-        }
-
-        System.out.println("\nStudents who did not submit:");
-        if (notSubmitted.isEmpty()) {
-            System.out.println("- None");
-        } else {
-            for (Student s : notSubmitted) {
-                System.out.println("- " + s.getId());
+            for (String studentId : assignment.getSubmittedStudents()) {
+                System.out.println("- Student " + studentId);
             }
         }
     }

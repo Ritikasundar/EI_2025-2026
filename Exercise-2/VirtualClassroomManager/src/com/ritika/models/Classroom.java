@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Classroom {
-
     private String name;
     private List<Student> students;
     private List<Assignment> assignments;
@@ -19,35 +18,43 @@ public class Classroom {
         return name;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
     public void addStudent(Student student) {
         students.add(student);
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public Student getStudentById(String studentId) {
+        for (Student student : students) {
+            if (student.getId().equals(studentId)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     public void addAssignment(Assignment assignment) {
+        // Prevent duplicate assignment IDs
+        for (Assignment existing : assignments) {
+            if (existing.getAssignmentId().equals(assignment.getAssignmentId())) {
+                throw new RuntimeException("Assignment [" + assignment.getAssignmentId() + "] already exists in [" + this.name + "].");
+            }
+        }
         assignments.add(assignment);
     }
 
-    // ✅ Get assignment by ID
-    public Assignment getAssignmentById(String assignmentId) {
-        for (Assignment a : assignments) {
-            if (a.getId().equals(assignmentId)) {
-                return a;
+    public Assignment getAssignment(String assignmentId) {
+        for (Assignment assignment : assignments) {
+            if (assignment.getAssignmentId().equals(assignmentId)) {
+                return assignment;
             }
         }
         return null;
     }
 
-    // ✅ Get student by ID
-    public Student getStudentById(String studentId) {
-        for (Student s : students) {
-            if (s.getId().equals(studentId)) {
-                return s;
-            }
-        }
-        return null;
+    public List<Assignment> getAssignments() {
+        return assignments;
     }
 }

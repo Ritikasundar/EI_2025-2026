@@ -1,35 +1,36 @@
 package com.ritika.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Assignment {
-
-    private String id;  // ✅ unique ID
+    private String assignmentId;
     private String details;
-    private List<Student> submittedStudents;
+    private Set<String> submittedStudents; // track unique submissions
 
-    public Assignment(String id, String details) {
-        this.id = id;
+    public Assignment(String assignmentId, String details) {
+        this.assignmentId = assignmentId;
         this.details = details;
-        this.submittedStudents = new ArrayList<>();
+        this.submittedStudents = new HashSet<>();
     }
 
-    public String getId() {
-        return id;
+    public String getAssignmentId() {
+        return assignmentId;
     }
 
     public String getDetails() {
         return details;
     }
 
-    public void markSubmitted(Student student) {
-        if (!submittedStudents.contains(student)) {
-            submittedStudents.add(student);
+    public boolean markSubmitted(String studentId) {
+        if (submittedStudents.contains(studentId)) {
+            return false; // already submitted
         }
+        submittedStudents.add(studentId);
+        return true; // first submission
     }
 
-    public List<Student> getSubmittedStudents() {
+    public Set<String> getSubmittedStudents() {
         return submittedStudents;
     }
 }
