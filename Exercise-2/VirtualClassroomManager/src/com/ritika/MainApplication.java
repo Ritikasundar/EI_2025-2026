@@ -12,7 +12,7 @@ public class MainApplication {
         Scanner scanner = new Scanner(System.in);
         ClassroomController classroomController = new ClassroomController();
         StudentController studentController = new StudentController(classroomController);
-        AssignmentController assignmentController = new AssignmentController(classroomController, studentController);
+        AssignmentController assignmentController = new AssignmentController(classroomController);
 
         boolean running = true;
 
@@ -27,9 +27,10 @@ public class MainApplication {
             System.out.println("5. List Classrooms");
             System.out.println("6. Exit");
             System.out.println("7. Remove Classroom");
-            System.out.println("8. View Students in a Classroom"); // ✅ new option
+            System.out.println("8. View Students in a Classroom");
+            System.out.println("9. View Assignment Submission Status"); // ✅ New
 
-            System.out.print("Enter your choice (1-8): ");
+            System.out.print("Enter your choice (1-9): ");
             String input = scanner.nextLine().trim();
 
             try {
@@ -48,12 +49,14 @@ public class MainApplication {
                         studentController.addStudent(studentId, classNameForStudent);
                         break;
 
-                    case "3":
+                    case "3": 
                         System.out.print("Enter classroom name: ");
                         String classNameForAssignment = scanner.nextLine().trim();
+                        System.out.print("Enter assignment ID: ");
+                        String assignmentId = scanner.nextLine().trim();
                         System.out.print("Enter assignment details: ");
                         String assignmentDetails = scanner.nextLine().trim();
-                        assignmentController.scheduleAssignment(classNameForAssignment, assignmentDetails);
+                        assignmentController.scheduleAssignment(classNameForAssignment, assignmentId, assignmentDetails);
                         break;
 
                     case "4":
@@ -61,9 +64,9 @@ public class MainApplication {
                         String studentIdSubmit = scanner.nextLine().trim();
                         System.out.print("Enter classroom name: ");
                         String classNameSubmit = scanner.nextLine().trim();
-                        System.out.print("Enter assignment details: ");
-                        String assignmentDetailsSubmit = scanner.nextLine().trim();
-                        assignmentController.submitAssignment(studentIdSubmit, classNameSubmit, assignmentDetailsSubmit);
+                        System.out.print("Enter assignment ID: ");
+                        String assignmentIdSubmit = scanner.nextLine().trim();
+                        assignmentController.submitAssignment(studentIdSubmit, classNameSubmit, assignmentIdSubmit);
                         break;
 
                     case "5":
@@ -81,14 +84,22 @@ public class MainApplication {
                         classroomController.removeClassroom(classNameToRemove);
                         break;
 
-                    case "8": 
+                    case "8":
                         System.out.print("Enter classroom name to view students: ");
                         String classNameForView = scanner.nextLine().trim();
                         studentController.listStudents(classNameForView);
                         break;
 
+                    case "9": // ✅ View assignment submissions
+                        System.out.print("Enter classroom name: ");
+                        String classNameAssignmentStatus = scanner.nextLine().trim();
+                        System.out.print("Enter assignment ID: ");
+                        String assignmentIdStatus = scanner.nextLine().trim();
+                        assignmentController.viewAssignmentSubmissions(classNameAssignmentStatus, assignmentIdStatus);
+                        break;
+
                     default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 8.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 9.");
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());

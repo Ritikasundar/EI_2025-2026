@@ -1,41 +1,27 @@
 package com.ritika.controllers;
 
-import com.ritika.models.Classroom;
-import com.ritika.models.Student;
-import com.ritika.models.Assignment;
 import com.ritika.services.AssignmentService;
-import com.ritika.utils.LoggerUtil;
+import com.ritika.controllers.ClassroomController;
 
 public class AssignmentController {
 
     private AssignmentService assignmentService;
-    private ClassroomController classroomController;
-    private StudentController studentController;
 
-    public AssignmentController(ClassroomController classroomController, StudentController studentController) {
-        this.assignmentService = new AssignmentService();
-        this.classroomController = classroomController;
-        this.studentController = studentController;
+    public AssignmentController(ClassroomController classroomController) {
+        this.assignmentService = new AssignmentService(classroomController.getClassroomService());
     }
 
-    // Schedule assignment
-    public void scheduleAssignment(String className, String assignmentDetails) {
-        LoggerUtil logger = LoggerUtil.getInstance();
-        Classroom classroom = classroomController.getClassroom(className);
-        Assignment assignment = assignmentService.scheduleAssignment(assignmentDetails, classroom);
-        System.out.println("Assignment for [" + className + "] has been scheduled.");
-        logger.log("Assignment scheduled for " + className + ": " + assignmentDetails);
+    public void scheduleAssignment(String className, String assignmentId, String assignmentDetails) {
+        assignmentService.scheduleAssignment(className, assignmentId, assignmentDetails);
+        System.out.println("Assignment [" + assignmentId + "] scheduled for classroom [" + className + "].");
     }
 
-    // Submit assignment
-    public void submitAssignment(String studentId, String className, String assignmentDetails) {
-        LoggerUtil logger = LoggerUtil.getInstance();
-        Classroom classroom = classroomController.getClassroom(className);
-        Student student = classroom.getStudents().stream()
-                .filter(s -> s.getId().equals(studentId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Student not found in classroom."));
-        assignmentService.submitAssignment(assignmentDetails, student, classroom);
-        logger.log("Assignment submitted by " + studentId + " in " + className);
+    public void submitAssignment(String studentId, String className, String assignmentId) {
+        assignmentService.submitAssignment(studentId, className, assignmentId);
+        System.out.println("Assignment [" + assignmentId + "] submitted by student [" + studentId + "] in [" + className + "].");
+    }
+
+    public void viewAssignmentSubmissions(String className, String assignmentId) {
+        assignmentService.viewAssignmentSubmissions(className, assignmentId);
     }
 }

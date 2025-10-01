@@ -1,23 +1,35 @@
 package com.ritika.models;
 
-public class Assignment {
-    private String details;
-    private boolean isSubmitted;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Assignment(String details) {
+public class Assignment {
+
+    private String id;  // ✅ unique ID
+    private String details;
+    private List<Student> submittedStudents;
+
+    public Assignment(String id, String details) {
+        this.id = id;
         this.details = details;
-        this.isSubmitted = false;
+        this.submittedStudents = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getDetails() {
         return details;
     }
 
-    public boolean isSubmitted() {
-        return isSubmitted;
+    public void markSubmitted(Student student) {
+        if (!submittedStudents.contains(student)) {
+            submittedStudents.add(student);
+        }
     }
 
-    public void submit() {
-        this.isSubmitted = true;
+    public List<Student> getSubmittedStudents() {
+        return submittedStudents;
     }
 }
