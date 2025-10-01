@@ -1,4 +1,4 @@
-package com.ritika;
+package com.ritika; 
 
 import com.ritika.controllers.ClassroomController;
 import com.ritika.controllers.StudentController;
@@ -20,24 +20,25 @@ public class MainApplication {
         System.out.println("===== Welcome to Virtual Classroom Manager =====");
 
         while (running) {
+            // Display menu options
             System.out.println("\nPlease choose an option:");
             System.out.println("1. Add Classroom");
             System.out.println("2. Add Student");
             System.out.println("3. Schedule Assignment");
             System.out.println("4. Submit Assignment");
             System.out.println("5. List Classrooms");
-            System.out.println("6. Exit");
-            System.out.println("7. Remove Classroom");
-            System.out.println("8. View Students in a Classroom");
-            System.out.println("9. View Assignment Submission Status");
-            System.out.println("10. Print logs");
+            System.out.println("6. Remove Classroom");
+            System.out.println("7. View Students in a Classroom");
+            System.out.println("8. View Assignment Submission Status");
+            System.out.println("9. Print Logs");
+            System.out.println("10. Exit"); 
 
             System.out.print("Enter your choice (1-10): ");
             String input = scanner.nextLine().trim();
 
             try {
                 switch (input) {
-                    case "1":
+                    case "1":  // Add a new classroom
                         System.out.print("Enter classroom name: ");
                         String className = scanner.nextLine().trim();
                         if (!InputValidator.isValidString(className)) {
@@ -47,7 +48,7 @@ public class MainApplication {
                         classroomController.addClassroom(className);
                         break;
 
-                    case "2":
+                    case "2":  // Add a new student
                         System.out.print("Enter student ID: ");
                         String studentId = scanner.nextLine().trim();
                         if (!InputValidator.isValidId(studentId)) {
@@ -63,7 +64,7 @@ public class MainApplication {
                         studentController.addStudent(studentId, classNameForStudent);
                         break;
 
-                    case "3":
+                    case "3":  // Schedule a new assignment
                         System.out.print("Enter classroom name: ");
                         String classNameForAssignment = scanner.nextLine().trim();
                         if (!InputValidator.isValidString(classNameForAssignment)) {
@@ -85,7 +86,7 @@ public class MainApplication {
                         assignmentController.scheduleAssignment(classNameForAssignment, assignmentId, assignmentDetails);
                         break;
 
-                    case "4":
+                    case "4":  // Submit an assignment
                         System.out.print("Enter student ID: ");
                         String studentIdSubmit = scanner.nextLine().trim();
                         if (!InputValidator.isValidId(studentIdSubmit)) {
@@ -107,16 +108,11 @@ public class MainApplication {
                         assignmentController.submitAssignment(studentIdSubmit, classNameSubmit, assignmentIdSubmit);
                         break;
 
-                    case "5":
+                    case "5":  // List all classrooms
                         classroomController.listClassrooms();
                         break;
 
-                    case "6":
-                        System.out.println("Exiting... Goodbye!");
-                        running = false;
-                        break;
-
-                    case "7":
+                    case "6":  // Remove a classroom
                         System.out.print("Enter classroom name to remove: ");
                         String classNameToRemove = scanner.nextLine().trim();
                         if (!InputValidator.isValidString(classNameToRemove)) {
@@ -126,7 +122,7 @@ public class MainApplication {
                         classroomController.removeClassroom(classNameToRemove);
                         break;
 
-                    case "8":
+                    case "7":  // View students in a classroom
                         System.out.print("Enter classroom name to view students: ");
                         String classNameForView = scanner.nextLine().trim();
                         if (!InputValidator.isValidString(classNameForView)) {
@@ -136,7 +132,7 @@ public class MainApplication {
                         studentController.listStudents(classNameForView);
                         break;
 
-                    case "9":
+                    case "8":  // View assignment submission status
                         System.out.print("Enter classroom name: ");
                         String classNameAssignmentStatus = scanner.nextLine().trim();
                         if (!InputValidator.isValidString(classNameAssignmentStatus)) {
@@ -151,20 +147,24 @@ public class MainApplication {
                         }
                         assignmentController.viewAssignmentSubmissions(classNameAssignmentStatus, assignmentIdStatus);
                         break;
-                    
-                    case "10":  // Print logs
-                        assignmentController.printLogs();  // prints all logged events to console
+
+                    case "9":  // Print logs
+                        assignmentController.printLogs();
                         break;
 
+                    case "10":  // Exit application
+                        System.out.println("Exiting... Goodbye!");
+                        running = false;
+                        break;
 
-                    default:
-                        System.out.println("Invalid choice. Please enter a number between 1 and 9.");
+                    default:  // Invalid menu option
+                        System.out.println("Invalid choice. Please enter a number between 1 and 10.");
                 }
             } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                System.out.println("Error: " + e.getMessage()); // Catch all exceptions for user feedback
             }
         }
 
-        scanner.close();
+        scanner.close(); 
     }
 }

@@ -1,4 +1,14 @@
-[2025-10-01 21:49:22] Classroom [a] added.
-[2025-10-01 21:49:49] Student [11] added to classroom [a].
-[2025-10-01 21:50:22] Assignment [1] scheduled for classroom [a].
-[2025-10-01 21:50:46] Listed all classrooms.
+[2025-10-02 00:00:15] Classroom [IT] added.
+[2025-10-02 00:00:30] Classroom [CSE] added.
+[2025-10-02 00:01:39] Student [22IT079] added to classroom [IT].
+[2025-10-02 00:01:59] Student [22IT077] added to classroom [IT].
+[2025-10-02 00:02:56] Assignment [79] scheduled for classroom [IT].
+[2025-10-02 00:03:08] Error scheduling assignment: Assignment [79] already exists in [IT].
+[2025-10-02 00:03:21] Error submitting assignment: Student [79] not found in [IT].
+[2025-10-02 00:03:38] Assignment [79] submitted by student [22IT079] in [IT].
+[2025-10-02 00:03:51] Error submitting assignment: Student [22IT079] has already submitted Assignment [79] in [IT].
+[2025-10-02 00:04:05] Listed all classrooms.
+[2025-10-02 00:04:13] Classroom [CSE] removed.
+[2025-10-02 00:04:16] Listed all classrooms.
+[2025-10-02 00:04:24] Listed students in classroom [IT].
+[2025-10-02 00:04:40] Viewed assignment submissions for [79] in [IT].

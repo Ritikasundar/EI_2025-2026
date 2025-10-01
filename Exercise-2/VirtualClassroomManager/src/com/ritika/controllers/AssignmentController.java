@@ -1,18 +1,19 @@
 package com.ritika.controllers;
 
 import com.ritika.services.AssignmentService;
-import com.ritika.controllers.ClassroomController;
 import com.ritika.utils.LoggerUtil;
 import com.ritika.exceptions.AssignmentException;
 
 public class AssignmentController {
 
-    private AssignmentService assignmentService;
+    private AssignmentService assignmentService; // Service layer handling assignment logic
 
+    // Constructor injects ClassroomController to access classroom data
     public AssignmentController(ClassroomController classroomController) {
         this.assignmentService = new AssignmentService(classroomController.getClassroomService());
     }
 
+    // Schedule a new assignment for a classroom
     public void scheduleAssignment(String className, String assignmentId, String assignmentDetails) {
         try {
             assignmentService.scheduleAssignment(className, assignmentId, assignmentDetails);
@@ -24,6 +25,7 @@ public class AssignmentController {
         }
     }
 
+    // Submit an assignment for a student in a classroom
     public void submitAssignment(String studentId, String className, String assignmentId) {
         try {
             assignmentService.submitAssignment(studentId, className, assignmentId);
@@ -35,6 +37,7 @@ public class AssignmentController {
         }
     }
 
+    // View all submissions for a specific assignment
     public void viewAssignmentSubmissions(String className, String assignmentId) {
         try {
             assignmentService.viewAssignmentSubmissions(className, assignmentId);
@@ -45,6 +48,7 @@ public class AssignmentController {
         }
     }
 
+    // Print all logs to console
     public void printLogs() {
         LoggerUtil.printLog();
     }

@@ -7,12 +7,14 @@ import com.ritika.exceptions.AssignmentException;
 
 public class AssignmentService {
 
-    private ClassroomService classroomService;
+    private ClassroomService classroomService; // Access classroom data and operations
 
+    // Constructor injects ClassroomService dependency
     public AssignmentService(ClassroomService classroomService) {
         this.classroomService = classroomService;
     }
 
+    // Schedule a new assignment in a classroom
     public void scheduleAssignment(String className, String assignmentId, String assignmentDetails) {
         Classroom classroom = classroomService.getClassroom(className);
         if (classroom == null) {
@@ -21,10 +23,11 @@ public class AssignmentService {
         try {
             classroom.addAssignment(new Assignment(assignmentId, assignmentDetails));
         } catch (RuntimeException e) {
-            throw new AssignmentException(e.getMessage()); // rethrow as AssignmentException
+            throw new AssignmentException(e.getMessage()); // Rethrow duplicate assignment as domain-specific exception
         }
     }
 
+    // Submit an assignment for a student; handles duplicate submissions
     public void submitAssignment(String studentId, String className, String assignmentId) {
         Classroom classroom = classroomService.getClassroom(className);
         if (classroom == null) {
@@ -47,6 +50,7 @@ public class AssignmentService {
         }
     }
 
+    // View all students who have submitted a specific assignment
     public void viewAssignmentSubmissions(String className, String assignmentId) {
         Classroom classroom = classroomService.getClassroom(className);
         if (classroom == null) {
