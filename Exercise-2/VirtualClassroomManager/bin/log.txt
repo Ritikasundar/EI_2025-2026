@@ -12,3 +12,15 @@
 [2025-10-02 00:04:16] Listed all classrooms.
 [2025-10-02 00:04:24] Listed students in classroom [IT].
 [2025-10-02 00:04:40] Viewed assignment submissions for [79] in [IT].
+[2025-10-02 09:16:31] Classroom [IT] added.
+[2025-10-02 09:17:01] Student [79] added to classroom [IT].
+[2025-10-02 09:17:57] Assignment [1] scheduled for classroom [IT].
+[2025-10-02 09:18:17] Student [79] removed from classroom [IT].
+[2025-10-02 09:18:32] Listed students in classroom [IT].
+[2025-10-02 09:18:57] Assignment [1] removed from classroom [IT].
+[2025-10-02 09:21:34] Classroom [IT] added.
+[2025-10-02 09:21:45] Error listing assignments: Classroom not found.
+[2025-10-02 09:21:56] Classroom [CSE] added.
+[2025-10-02 09:22:08] Assignment [2] scheduled for classroom [IT].
+[2025-10-02 09:22:17] Listed assignments for classroom [IT].
+[2025-10-02 09:22:34] Assignment [2] removed from classroom [IT].
